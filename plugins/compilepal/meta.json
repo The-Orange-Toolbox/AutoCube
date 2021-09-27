@@ -1,0 +1,11 @@
+{
+  "Name": "AUTOCUBE",
+  "Path": "Parameters\\AUTOCUBE\\AutoCube.exe",
+  "Order": 9.1,
+  "DoRun": true,
+  "ReadOutput": true,
+  "Description": "Automates cubemap generation in-game",
+  "Warning": "Does not support Left 4 Dead 1-2",
+  "PresetDefault": false,
+  "BasisString": "$map$ --exe $gameEXE$ --game $game$"
+}
