@@ -5,12 +5,14 @@ from _constants import *
 
 from totcommon.executable import TOTExecutable
 
+from buildcubemaps import buildcubemaps
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Automates cubemap generation in-game.')
 
-    parser.add_argument('input', type=ascii,
-                        help='The name of the map to build (without extension).')
+    parser.add_argument('input', metavar='path', type=ascii,
+                        help='The path of the BSP to build.')
 
     parser.add_argument('-e', '--exe', required=True,
                         metavar='path', type=ascii, default='',
@@ -32,7 +34,8 @@ if __name__ == '__main__':
 
     with TOTExecutable(NAME, ORGNAME, URL, VERSION, BUILD_DATE):
 
-        mapName = eval(args.input)
+        bspPath = os.path.normpath(eval(args.input))
+        mapName = bspPath.split('\\')[-1].replace('.bsp', '')
         gameExe = os.path.normpath(eval(args.exe))
         gameDir = os.path.normpath(eval(args.game))
 
@@ -42,3 +45,5 @@ if __name__ == '__main__':
             steamExe = None
 
         steamId = args.appid
+
+        buildcubemaps(bspPath, mapName, gameExe, gameDir, steamExe, steamId)
