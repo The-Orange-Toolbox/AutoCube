@@ -3,10 +3,7 @@ import argparse
 
 from _constants import *
 
-from totcommon.logger import print_header
-from totcommon.updater import check_updates
-from totcommon.reporter import ErrorReporter
-from totcommon.stopwatch import StopWatch
+from totcommon.executable import TOTExecutable
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -33,20 +30,15 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    print_header(ORGNAME, NAME, BUILD_DATE)
-    check_updates(NAME, VERSION, URL)
+    with TOTExecutable(NAME, ORGNAME, URL, VERSION, BUILD_DATE):
 
-    if (args.steam):
-        steamExe = os.path.normpath(eval(args.steam))
-    else:
-        steamExe = None
+        mapName = eval(args.input)
+        gameExe = os.path.normpath(eval(args.exe))
+        gameDir = os.path.normpath(eval(args.game))
 
-    steamId = args.appid
+        if (args.steam):
+            steamExe = os.path.normpath(eval(args.steam))
+        else:
+            steamExe = None
 
-    gameExe = os.path.normpath(eval(args.exe))
-    gameDir = os.path.normpath(eval(args.game))
-
-    mapName = eval(args.input)
-
-    with ErrorReporter(NAME, URL), StopWatch():
-        pass
+        steamId = args.appid
