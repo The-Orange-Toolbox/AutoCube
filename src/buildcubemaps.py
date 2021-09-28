@@ -1,6 +1,6 @@
 import time
+from struct import Struct
 from valveexe import ValveExe
-from valvebsp import Bsp
 from valveexe.console import ExecConsole, RconConsole
 from totcommon.logger import stdout
 
@@ -15,12 +15,16 @@ def buildcubemaps(bspPath, mapName, gameExe, gameDir, steamExe, steamId):
                      '+map', mapName, ])
 
     stdout('Detecting dynamic ranges...')
-    
-    bsp = Bsp(bspPath)
 
-    ldr = bsp.header.lump_t[8].filelen > 0
-    hdr = bsp.header.lump_t[53].filelen > 0
-    cnt = bsp.header.lump_t[42].filelen / 16
+    with open(bspPath, 'rb') as f:
+        f.seek(8, 0)
+        lump_headers = Struct('iiii' * 64).unpack(f.read(64*4*4))
+        lump_lengths = [lump_headers[i] for i in range(len(lump_headers)) 
+                        if i % 4 == 1]
+
+    ldr = lump_lengths[8] > 0
+    hdr = lump_lengths[53] > 0
+    cnt = lump_lengths[42] / 16
 
     cubes_completed = 'sample: {0}/{0}'.format(int(cnt))
     map_loaded = "Redownloading all lightmaps|connected\."
@@ -42,6 +46,7 @@ def buildcubemaps(bspPath, mapName, gameExe, gameDir, steamExe, steamId):
                 if "Can't save multiplayer games." in hlogs:
                     console.run('map', mapName)
                     valveExe.logger.log_until(map_loaded)
+                    time.sleep(1)
             else:
                 stdout('Generating Cubemaps...')
 
@@ -58,10 +63,13 @@ def buildcubemaps(bspPath, mapName, gameExe, gameDir, steamExe, steamId):
         if isinstance(console, ExecConsole):
            valveExe.logger.log_until(map_loaded)
 
-        if (valveExe.hijacked):
+        time.sleep(1)
+
+        if valveExe.hijacked:
             console.run("disconnect")
-        else:
-            console.run("quit")
+
+    if not valveExe.hijacked:
+        valveExe.quit()
 
     del valveExe
 

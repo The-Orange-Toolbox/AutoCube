@@ -11,8 +11,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Automates cubemap generation in-game.')
 
-    parser.add_argument('input', metavar='path', type=ascii,
-                        help='The path of the BSP to build.')
+    parser.add_argument('input', type=ascii,
+                        help='The name of the map to build (without extension).')
 
     parser.add_argument('-e', '--exe', required=True,
                         metavar='path', type=ascii, default='',
@@ -34,10 +34,10 @@ if __name__ == '__main__':
 
     with TOTExecutable(NAME, ORGNAME, URL, VERSION, BUILD_DATE):
 
-        bspPath = os.path.normpath(eval(args.input))
-        mapName = bspPath.split('\\')[-1].replace('.bsp', '')
+        mapName = eval(args.input)
         gameExe = os.path.normpath(eval(args.exe))
         gameDir = os.path.normpath(eval(args.game))
+        bspPath = os.path.join(gameDir, 'maps', mapName + '.bsp')
 
         if (args.steam):
             steamExe = os.path.normpath(eval(args.steam))
