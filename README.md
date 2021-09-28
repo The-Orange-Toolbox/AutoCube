@@ -18,9 +18,12 @@ The executable can be used standalone without any of the other files it is bundl
 - Copy the AutoCube.exe from AutoCube/ to your bin folder (e.g. steamapps/common/Team Fortress 2/bin, or any prefered folder).
 - In Hammer's expert compile window, use the "New" button to add a new command.
 - For the command, click the "Cmds" button, select "executable", select the location of the AutoCube.exe.
-- For the parameters, add `$file` into the text field.
+- For the parameters, add `$file --exe $game_exe --game $gamedir` into the text field.
 - Use the "Move Up"/"Move Down" buttons to order the command properly (recommended to be placed after the copy command).
 - Hit "Go!" and compile away!
 
 ### Using with command line
 Run the executable with `AutoCube --help` for complete information about its usage.
+
+## CS:GO Caveats
+CSGO requires additional arguments in order to work. Make sure you include the --steamexe and --appid arguments with their appropriate values

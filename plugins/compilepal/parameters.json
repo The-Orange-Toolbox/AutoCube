@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "Name": "SteamExe",
+        "Parameter": " --steam",
+        "Description": "specify the steam exe for a steam based game launch.",
+        "Value": "",
+        "CanHaveValue": true,
+        "Warning": ""
+      },
+      {
+        "Name": "AppId",
+        "Parameter": " --appid",
+        "Description": "for use with --steam, specifies the steam appid for game launches.",
+        "Value": "",
+        "CanHaveValue": true,
+        "Warning": ""
+      }
+]
