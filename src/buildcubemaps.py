@@ -29,7 +29,7 @@ def buildcubemaps(bspPath, mapName, gameExe, gameDir, steamExe, steamId):
     cubes_completed = 'sample: {0}/{0}'.format(int(cnt))
     map_loaded = "Redownloading all lightmaps|connected\."
     hdr_changed = "Redownloading all lightmaps|Can't save multiplayer games."
- 
+
     with valveExe as console:
         stdout('Waiting for map load...')                
         valveExe.logger.log_until(map_loaded)
@@ -59,9 +59,6 @@ def buildcubemaps(bspPath, mapName, gameExe, gameDir, steamExe, steamId):
             run_cubemaps('ldr')
         else:
             run_cubemaps()
-
-        if isinstance(console, ExecConsole):
-           valveExe.logger.log_until(map_loaded)
 
         time.sleep(1)
 
