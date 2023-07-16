@@ -1,5 +1,5 @@
 ORGNAME = "The Orange Toolbox"
 NAME = "AutoCube"
-VERSION = "1.0.0"
-BUILD_DATE = "Sep 28 2021"
+VERSION = "1.0.1"
+BUILD_DATE = "Jul 16 2023"
 URL = "https://github.com/The-Orange-Toolbox/AutoCube"
